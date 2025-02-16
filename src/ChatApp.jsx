@@ -16,7 +16,7 @@ export default function ChatApp() {
       sender: isUserTurn ? "sent" : "received",
     };
     setChatHistory([...chatHistory, newMessage]); // set serve per cambiare il valore di uno stato associato
-    setInput("");
+    setInput(""); // ... è uno spread operetor 
     setIsUserTurn(!isUserTurn);
   };
 
