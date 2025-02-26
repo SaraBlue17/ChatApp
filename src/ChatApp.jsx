@@ -1,36 +1,33 @@
 import { useEffect, useRef, useState } from "react";
-import { mutate } from "swr";
 import { useBot } from "./utils/useBot";
 
 export default function ChatApp() {
   const [chatHistory, setChatHistory] = useState([]);
-
   const [input, setInput] = useState("");
 
-  const { data } = useBot();
+  const { mutate } = useBot();
 
   const sendMessage = (e) => {
     e.preventDefault(); // funzione che serve per evitare il reload della pagina all'onSubmit del form
 
     if (!input.trim()) return;
+
     const newMessage = {
       text: input,
       isUser: true,
     };
+
     setChatHistory([...chatHistory, newMessage]); // set serve per cambiare il valore di uno stato associato
     setInput(""); // clearing input field  // ... spread operetor
 
-    mutate("https://mocki.io/v1/731f2d9d-6a2a-4f9a-adf6-2f01de012cee").then(
-      () => {
-        if (data) {
-          const botMessage = {
-            text: data.response,
-            isUser: false,
-          };
-          setChatHistory((prevMessage) => [...prevMessage, botMessage]);
-        }
-      }
-    ); // serve per richiamare il fetch
+    mutate().then((newData) => {
+      if (newData) {
+        setChatHistory((prev) => [
+          ...prev,
+          { text: newData.response, isUser: false },
+        ]);
+      } // serve per richiamare il fetch
+    });
   };
 
   const lastMessageRef = useRef(null);
