@@ -31,6 +31,7 @@ export default function ChatApp() {
     });
   };
 
+  // riferimento per scorrere in automatico all'ultimo messaggio
   const lastMessageRef = useRef(null);
 
   useEffect(() => {
