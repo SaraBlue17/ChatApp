@@ -5,6 +5,7 @@ export default function ChatApp() {
   const [chatHistory, setChatHistory] = useState([]);
   const [input, setInput] = useState("");
 
+  // Ottiene la funzione mutate dal custom hook useBot
   const { mutate } = useBot();
 
   const sendMessage = (e) => {
